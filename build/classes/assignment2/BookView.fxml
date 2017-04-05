@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment2.BookViewController">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <GridPane alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="348.0" prefWidth="474.0">
+              <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="107.0" minWidth="10.0" prefWidth="43.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="268.0" minWidth="10.0" prefWidth="268.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="62.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="188.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" text="Title" />
+                  <Label text="Series" GridPane.columnIndex="2" />
+                  <Label text="Author" GridPane.rowIndex="1" />
+                  <Label text="Genres" GridPane.rowIndex="2" />
+                  <Label text="Puhlisher" GridPane.rowIndex="3" />
+                  <Label text="ISBN" GridPane.rowIndex="4" />
+                  <Label text="Book Type" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                  <Label text="Number In Stock" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="5" />
+                  <Label text="Publish Date" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label text="Cover Artist" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label text="Cost ($)" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label text="Number of Sales" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <TextField fx:id="titleTextField" GridPane.columnIndex="1" />
+                  <TextField fx:id="authorTextField" promptText="FirstName LastName, Firstname LastName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="genresTextField" promptText="Seperate multiples with Commas" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="publisherTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="isbnTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="numberInStockTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="seriesTextField" GridPane.columnIndex="3" />
+                  <TextField fx:id="coverArtistTextField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <TextField fx:id="costTextField" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <TextField fx:id="bookTypeTextField" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <TextField fx:id="numberOfSalesTextField" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <DatePicker fx:id="publishDatePicker" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </GridPane>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="49.0" prefWidth="600.0" spacing="40.0">
+                     <children>
+                        <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonPushed" text="Return" />
+                        <Button fx:id="editButton" mnemonicParsing="false" onAction="#editBookButtonPushed" text="Edit" />
+                        <Button fx:id="addNewBookButton" mnemonicParsing="false" onAction="#addBookButtonPushed" text="Add New" />
+                     </children>
+                  </HBox>
+                  <TextArea fx:id="outputTextArea" editable="false" prefHeight="200.0" prefWidth="200.0" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+         <opaqueInsets>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </opaqueInsets>
+      </VBox>
+   </children>
+</AnchorPane>
