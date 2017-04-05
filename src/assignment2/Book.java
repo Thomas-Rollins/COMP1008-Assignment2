@@ -5,7 +5,7 @@ import java.time.Month;
 import java.util.ArrayList;
 
 /**
- *  TODO: change setArrayLists to add/remove methods
+ *  TODO: REMOVE series variable from constructor
  * @author Thomas Rollins
  */
 public class Book {
