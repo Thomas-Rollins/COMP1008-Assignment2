@@ -25,12 +25,8 @@ public class BookTest {
     private Book validBook3;
     private Book validBook4;
     private Book validBook5;
-    private Book invalidBook;
     
     private Author validAuthor;
-    
-    private Series validSeries;
-    private Series validSeries2;
     
     public BookTest() {
     }
@@ -45,16 +41,14 @@ public class BookTest {
     
     @Before
     public void setUp() {
-       validSeries = new Series("Valid-Series");
-       validSeries2 = new Series("ValdSeries2");
         
-       validBook = new Book("Title", "978-92-95055-02-5", "Cover Artist", validSeries,
+       validBook = new Book("Title", "978-92-95055-02-5", "Cover Artist", "Series1",
                 LocalDate.of(2007, Month.JANUARY, 2), 19.99, 100, 50);
-       validBook2 = new Book("Title", "978-92-95055-02-5", "Cover Artist", validSeries,
+       validBook2 = new Book("Title", "978-92-95055-02-5", "Cover Artist", "Series1",
                 LocalDate.of(2007, Month.JANUARY, 1), 19.99, 100, 50);
-       validBook3 = new Book("Title", "978-92-95-02-5", "Cover Artist", validSeries,
+       validBook3 = new Book("Title", "978-92-95-02-5", "Cover Artist", "Series2",
                 LocalDate.of(2006, Month.DECEMBER, 31), 19.99, 100, 50);
-       validBook4 = new Book("Title", "978-92-95-02-5", "Cover Artist", validSeries,
+       validBook4 = new Book("Title", "978-92-95-02-5", "Cover Artist", "Series3",
                 null, 19.99, 100, 50);
        validBook5 = new Book("Title", "978-92-95951-02-5", "Cover Artist", null,
                LocalDate.of(2018, Month.DECEMBER, 31), 19.99, 100, 50);
@@ -261,31 +255,20 @@ public class BookTest {
     public void testGetSeries() {
         System.out.println("getSeries");
         Book instance = validBook;
-        Series expResult = validSeries;
-        Series result = instance.getSeries();
+        String expResult = "Series1";
+        String result = instance.getSeries();
         assertEquals(expResult, result);
     }
 
     @Test
-    public void testAddSeries() {
+    public void testSetSeries() {
         System.out.println("addSeries");
-        Series expResult = validSeries;
+        String expResult = "Series1";
         Book instance = validBook5;
         instance.setSeries(expResult);
         assertEquals(expResult, instance.getSeries());
     }
-    
-    @Test
-    public void testValidateSeries() {
-        System.out.println("ValidateSeries");
-        Book instance = validBook;
-        Series series = validSeries2;
-        try {
-            instance.setSeries(series);
-            fail("Should have thrown an exception");
-        }
-        catch(IllegalArgumentException e){}
-    }
+
 
     @Test
     public void testGetCost() {

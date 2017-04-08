@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BookViewController.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Assignment2&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">assignment2</a> &gt; <span class="el_source">BookViewController.java</span></div><h1>BookViewController.java</h1><pre class="source lang-java linenums">package assignment2;
+
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+
+/**
+ * FXML BookViewController class
+ *
+ * @author Thomas Rollins
+ */
+<span class="nc" id="L18">public class BookViewController implements Initializable {</span>
+
+    
+    @FXML private TextField titleTextField;
+    @FXML private TextField authorTextField;
+    @FXML private TextField genresTextField;
+    @FXML private TextField publisherTextField;
+    @FXML private TextField isbnTextField;
+    @FXML private TextField numberInStockTextField;
+    @FXML private TextField seriesTextField;
+    @FXML private TextField coverArtistTextField;
+    @FXML private TextField costTextField;
+    @FXML private TextField bookTypeTextField;
+    @FXML private TextField numberOfSalesTextField;
+    
+    @FXML private TextArea outputTextArea;
+    
+    @FXML private DatePicker publishDatePicker;
+    
+    @FXML private Button returnButton;
+    @FXML private Button editButton;
+    @FXML private Button addNewBookButton;
+    
+    /**
+     * Initializes the controller class.
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+<span class="nc" id="L49">    } </span>
+    
+    public void addBookButtonPushed()
+    {
+        String title, author, genre, publisher, isbn, numberInStock, series,
+                coverArtist, costString, bookType, numberOfSalesString;
+        LocalDate publishDate;
+        
+<span class="nc" id="L57">        title = titleTextField.getText();</span>
+<span class="nc" id="L58">        author = authorTextField.getText();</span>
+<span class="nc" id="L59">        genre = genresTextField.getText();</span>
+<span class="nc" id="L60">        publisher = publisherTextField.getText();</span>
+<span class="nc" id="L61">        isbn = isbnTextField.getText();</span>
+<span class="nc" id="L62">        numberInStock = numberInStockTextField.getText();</span>
+<span class="nc" id="L63">        series = seriesTextField.getText();</span>
+<span class="nc" id="L64">        publishDate = publishDatePicker.getValue();</span>
+<span class="nc" id="L65">        coverArtist = coverArtistTextField.getText();</span>
+<span class="nc" id="L66">        costString = costTextField.getText();</span>
+<span class="nc" id="L67">        bookType = bookTypeTextField.getText();</span>
+<span class="nc" id="L68">        numberOfSalesString = numberOfSalesTextField.getText();</span>
+        
+<span class="nc" id="L70">        outputTextArea.setText(&quot;Title: &quot; + title + &quot;\tAuthor: &quot; + author + &quot;\tGenre: &quot;</span>
+        + genre + &quot;\nPublisher: &quot; + publisher + &quot;\tISBN: &quot; + isbn + &quot;\tnumberInStock: &quot;
+<span class="nc" id="L72">        + numberInStock + &quot;\nSeries: &quot; + series + &quot;\tPublish Date: &quot; + publishDate.toString()</span>
+        + &quot;\tCover Arist: &quot; + coverArtist + &quot;\nCost: &quot; + costString + &quot;\tBook Type: &quot;
+        + bookType + &quot;\tNumber of Sales: &quot; + numberOfSalesString);
+       
+        
+<span class="nc" id="L77">    }</span>
+    
+    public void editBookButtonPushed()
+    {
+        
+<span class="nc" id="L82">    }</span>
+    
+    public void returnButtonPushed()
+    {
+        
+<span class="nc" id="L87">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

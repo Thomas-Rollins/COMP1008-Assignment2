@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BookShelf.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Assignment2&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">assignment2</a> &gt; <span class="el_source">BookShelf.java</span></div><h1>BookShelf.java</h1><pre class="source lang-java linenums">package assignment2;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+/**
+ * TODO: sort lists
+ * @author Thomas Rollins
+ */
+public class BookShelf {
+
+    private final int MAX_BOOKS_PER_ROW;
+    private final int MAX_SHELF_COLUMNS;
+ 
+    private ArrayList&lt;Book&gt;[] shelf;
+    
+    public BookShelf(int maxNumberOfRows, int maxNumberOfColumns)
+<span class="fc" id="L19">    {</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        if(validateMaxBooksPerRow(maxNumberOfRows))</span>
+<span class="fc" id="L21">            MAX_BOOKS_PER_ROW = maxNumberOfRows;</span>
+        else
+<span class="fc" id="L23">            throw new IllegalArgumentException(&quot;Invalid number of rows&quot;);</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        if(validateMaxNumberOfColumns(maxNumberOfColumns))</span>
+<span class="fc" id="L25">            MAX_SHELF_COLUMNS = maxNumberOfColumns;</span>
+        else
+<span class="fc" id="L27">            throw new IllegalArgumentException(&quot;Invalid number of Columns&quot;);</span>
+        //int the Array
+<span class="fc" id="L29">        shelf = new ArrayList[MAX_SHELF_COLUMNS];</span>
+        
+        //int the ArrayLists
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        for(int i = 0; i &lt; MAX_SHELF_COLUMNS; i++)</span>
+        {
+<span class="fc" id="L34">            shelf[i] = new ArrayList&lt;&gt;();</span>
+        }
+<span class="fc" id="L36">    }</span>
+    
+    /* START OF GETTERS/SETTERS */
+    
+    public int getMaxRows()
+    {
+<span class="fc" id="L42">       return MAX_BOOKS_PER_ROW;</span>
+    }
+    
+    public int getMaxColumns()
+    {
+<span class="fc" id="L47">        return MAX_SHELF_COLUMNS;</span>
+    }
+    
+    public void addBook(int row, Book book)
+    {
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if(validateAddBook(row))</span>
+<span class="fc" id="L53">            shelf[row].add(book);</span>
+        else
+<span class="fc" id="L55">            throw new IllegalArgumentException(&quot;The row is completely filled&quot;);</span>
+<span class="fc" id="L56">    }</span>
+    
+    public ArrayList getBooksOnShelfRow(int index)
+    {
+<span class="fc" id="L60">        ArrayList&lt;Book&gt; booksOnShelfRow = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        for (int i = 0; i &lt; shelf[index].size(); i++)</span>
+        {
+<span class="fc" id="L63">            booksOnShelfRow.add(shelf[index].get(i));</span>
+        }
+<span class="fc" id="L65">        return booksOnShelfRow;</span>
+    }
+    
+    public ArrayList getAllBooksOnShelf()
+    {
+<span class="fc" id="L70">        ArrayList&lt;Book&gt; allBooksOnShelf = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        for (int i = 0; i &lt; MAX_SHELF_COLUMNS; i++)</span>
+        {
+<span class="fc bfc" id="L73" title="All 2 branches covered.">            for (int index = 0; index &lt; shelf[i].size(); index++)</span>
+            {
+<span class="fc" id="L75">                allBooksOnShelf.add(shelf[i].get(index));</span>
+            }
+        }
+        
+<span class="fc" id="L79">        return allBooksOnShelf;</span>
+    }
+    
+    public ArrayList&lt;Book&gt; getAllBooksByAuthorOnShelf(Author author)
+    {
+<span class="fc" id="L84">        ArrayList&lt;Book&gt; allBooksOnShelfByAuthor = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (int i = 0; i &lt; MAX_SHELF_COLUMNS; i++)</span>
+        {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            for (int index = 0; index &lt; shelf[i].size(); index++)</span>
+            {
+<span class="pc bpc" id="L89" title="1 of 4 branches missed.">                if((shelf[i].get(index).getAuthors().contains(author)) &amp;&amp; (!allBooksOnShelfByAuthor.contains((shelf[i].get(index)))))</span>
+<span class="fc" id="L90">                    allBooksOnShelfByAuthor.add(shelf[i].get(index));</span>
+                else {}
+            }
+        }
+        
+<span class="fc" id="L95">        return allBooksOnShelfByAuthor;</span>
+    }
+    
+    public int getNumberOfBooksOnShelf()
+    {
+<span class="fc" id="L100">        int numberOfBooksOnShelf = getAllBooksOnShelf().size();</span>
+        
+<span class="fc" id="L102">        return numberOfBooksOnShelf;</span>
+    }
+    
+    public ArrayList&lt;Author&gt; getAuthorsOnShelf(int index)
+    {
+<span class="fc" id="L107">        ArrayList&lt;Author&gt; authorsOnShelf = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        for (int i = 0; i &lt; shelf[index].size(); i++)</span>
+        {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">            for (int j = 0; j &lt; shelf[index].get(i).getAuthors().size(); j++)</span>
+            {
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">                if(!authorsOnShelf.contains(shelf[index].get(i).getAuthors().get(j)))</span>
+<span class="fc" id="L113">                authorsOnShelf.add(shelf[index].get(i).getAuthors().get(j));</span>
+            }
+            
+        }
+        //sort by last name
+<span class="fc" id="L118">       Collections.sort(authorsOnShelf, Comparator.comparing(Author::getLastName));</span>
+        
+<span class="fc" id="L120">        return authorsOnShelf;</span>
+    }
+    
+    public String getListOfAuthorsOnShelf(int index)
+    {
+<span class="fc" id="L125">        String output = &quot;&quot;;</span>
+<span class="fc" id="L126">        ArrayList&lt;Author&gt; authorsOnShelf = getAuthorsOnShelf(index);</span>
+        
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        while (!authorsOnShelf.isEmpty())</span>
+        {
+<span class="fc bfc" id="L130" title="All 2 branches covered.">            if(authorsOnShelf.size()==1)</span>
+            {
+<span class="fc" id="L132">                output += authorsOnShelf.get(0).getFirstName() + &quot; &quot; + </span>
+<span class="fc" id="L133">                    authorsOnShelf.get(0).getLastName();</span>
+<span class="fc" id="L134">                return output;</span>
+            }
+<span class="fc" id="L136">            output += authorsOnShelf.get(0).getFirstName() + &quot; &quot; + </span>
+<span class="fc" id="L137">                    authorsOnShelf.get(0).getLastName() + &quot;, &quot;;</span>
+<span class="fc" id="L138">            authorsOnShelf.remove(0);</span>
+        }
+<span class="fc" id="L140">        return output;</span>
+    }
+    
+    public int getNumberOfAuthorsOnShelf()
+    {
+<span class="fc" id="L145">        ArrayList&lt;Author&gt; authorList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        for (int i = 0; i &lt; MAX_SHELF_COLUMNS; i ++)</span>
+        {
+<span class="fc bfc" id="L148" title="All 2 branches covered.">           for (int j = 0; j &lt; getAuthorsOnShelf(i).size(); j++)</span>
+           {
+<span class="fc bfc" id="L150" title="All 2 branches covered.">               if(!authorList.contains(getAuthorsOnShelf(i).get(j)))</span>
+<span class="fc" id="L151">                   authorList.add(getAuthorsOnShelf(i).get(j));</span>
+           }
+        }
+<span class="fc" id="L154">        int numberOfAuthorsOnShelf = authorList.size();</span>
+<span class="fc" id="L155">        return numberOfAuthorsOnShelf;</span>
+    }
+    
+    public ArrayList&lt;String&gt; getGenresOnShelf(int index)
+    {
+<span class="fc" id="L160">        ArrayList&lt;String&gt; genresOnShelf = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        for (int i = 0; i &lt; shelf[index].size(); i++)</span>
+        {
+<span class="fc bfc" id="L163" title="All 2 branches covered.">            for (int j = 0; j &lt; shelf[index].get(i).getGenres().size(); j++)</span>
+            {
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">                if(!genresOnShelf.contains(shelf[index].get(i).getGenres().get(j))) {</span>
+<span class="fc" id="L166">                    genresOnShelf.add(shelf[index].get(i).getGenres().get(j));</span>
+                } 
+            }
+        }
+<span class="fc" id="L170">        return genresOnShelf;</span>
+    }
+    
+    public String getListOfGenresOnShelf(int index)
+    {
+<span class="fc" id="L175">        String output = &quot;&quot;;</span>
+<span class="fc" id="L176">        ArrayList&lt;String&gt; genresOnShelf = getGenresOnShelf(index);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">        for (int i = 0; i &lt; genresOnShelf.size() -1; i++)</span>
+        {
+<span class="fc" id="L179">            output += genresOnShelf.get(i) + &quot;, &quot;;</span>
+        }
+<span class="fc" id="L181">        output += genresOnShelf.get(genresOnShelf.size() - 1);</span>
+        
+<span class="fc" id="L183">        return output;</span>
+    }
+    
+    /* END OF GETTERS/SETTERS */
+    
+    /* START OF VALIDATORS */
+    
+    private boolean validateMaxBooksPerRow(int maxNumberOfRows)
+    {
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        return (maxNumberOfRows &gt; 0);</span>
+    }
+    
+    private boolean validateMaxNumberOfColumns(int maxNumberOfColumns)
+    {
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        return (maxNumberOfColumns &gt; 0);</span>
+    }
+    
+    private boolean validateAddBook(int row)
+    {
+<span class="fc bfc" id="L202" title="All 2 branches covered.">        return (shelf[row].size() &lt; MAX_BOOKS_PER_ROW);    </span>
+    }
+    
+    /* END OF VALIDTORS */
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

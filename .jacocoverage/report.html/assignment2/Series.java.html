@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Series.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Assignment2&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">assignment2</a> &gt; <span class="el_source">Series.java</span></div><h1>Series.java</h1><pre class="source lang-java linenums">package assignment2;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+/**
+ *  TODO: change setArrayLists to add/remove methods
+ * @author Thomas Rollins
+ */
+public class Series {
+
+    private String seriesName;
+    private ArrayList&lt;Book&gt; completedBooksInSeries, futureBooksInSeries;
+<span class="nc" id="L14">    private enum STATUS {IN_PROGRESS, COMPLETED};</span>
+    private ArrayList&lt;Author&gt; authors;
+    private LocalDate startDate, endDate;
+
+<span class="fc" id="L18">    public Series(String seriesName) {</span>
+<span class="fc" id="L19">        this.seriesName = seriesName;</span>
+        
+<span class="fc" id="L21">    }</span>
+
+    public String getSeriesName() {
+<span class="nc" id="L24">        return seriesName;</span>
+    }
+
+    public void setSeriesName(String seriesName) {
+<span class="nc" id="L28">        this.seriesName = seriesName;</span>
+<span class="nc" id="L29">    }</span>
+
+    public ArrayList&lt;Book&gt; getCompletedBooksInSeries() {
+<span class="nc" id="L32">        return completedBooksInSeries;</span>
+    }
+
+    public void setCompletedBooksInSeries(ArrayList&lt;Book&gt; completedBooksInSeries) {
+<span class="nc" id="L36">        this.completedBooksInSeries = completedBooksInSeries;</span>
+<span class="nc" id="L37">    }</span>
+
+    public ArrayList&lt;Book&gt; getFutureBooksInSeries() {
+<span class="nc" id="L40">        return futureBooksInSeries;</span>
+    }
+
+    public void setFutureBooksInSeries(ArrayList&lt;Book&gt; futureBooksInSeries) {
+<span class="nc" id="L44">        this.futureBooksInSeries = futureBooksInSeries;</span>
+<span class="nc" id="L45">    }</span>
+
+    public ArrayList&lt;Author&gt; getAuthors() {
+<span class="nc" id="L48">        return authors;</span>
+    }
+
+    public void setAuthors(ArrayList&lt;Author&gt; authors) {
+<span class="nc" id="L52">        this.authors = authors;</span>
+<span class="nc" id="L53">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

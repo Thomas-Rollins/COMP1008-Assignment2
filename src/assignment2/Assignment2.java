@@ -22,7 +22,7 @@ public class Assignment2 extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("BookView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("BookStoreView.fxml"));
         
         Scene scene = new Scene(root);
         
@@ -34,14 +34,7 @@ public class Assignment2 extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Series validSeries = new Series("Valid-Series");
-        Book invalidBook = new Book("Title", "978-92-95-02-5", "Cover Artist", validSeries,
-                null, 19.99, 100, 50);
-        
-        
-        
-       
-//launch(args);
+        launch(args);
     }
     
 }

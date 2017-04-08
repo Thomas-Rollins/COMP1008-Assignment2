@@ -39,12 +39,11 @@
                   <Label text="Genres" GridPane.rowIndex="2" />
                   <Label text="Puhlisher" GridPane.rowIndex="3" />
                   <Label text="ISBN" GridPane.rowIndex="4" />
-                  <Label text="Book Type" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                   <Label text="Number In Stock" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="5" />
                   <Label text="Publish Date" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <Label text="Cover Artist" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <Label text="Cost ($)" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <Label text="Number of Sales" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <Label text="Number of Sales" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                   <TextField fx:id="titleTextField" GridPane.columnIndex="1" />
                   <TextField fx:id="authorTextField" promptText="FirstName LastName, Firstname LastName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="genresTextField" promptText="Seperate multiples with Commas" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -54,8 +53,7 @@
                   <TextField fx:id="seriesTextField" GridPane.columnIndex="3" />
                   <TextField fx:id="coverArtistTextField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <TextField fx:id="costTextField" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <TextField fx:id="bookTypeTextField" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                  <TextField fx:id="numberOfSalesTextField" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                  <TextField fx:id="numberOfSalesTextField" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                   <DatePicker fx:id="publishDatePicker" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                </children>
                <padding>

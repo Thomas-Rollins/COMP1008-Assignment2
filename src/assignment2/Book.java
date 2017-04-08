@@ -13,13 +13,13 @@ public class Book {
     private String title, isbn, coverArtist;
     private ArrayList<String> genres;
     private ArrayList<Author> authors;
-    private Series series;
+    private String series, publisher;
     private double cost;
     private int numberInStock, sales;
     private enum STATUS {COMPLETED, IN_PROGRESS};
     private LocalDate publishDate;
     private STATUS bookStatus;
-    public Book(String title, String isbn, String coverArtist, Series series, LocalDate publishDate,
+    public Book(String title, String isbn, String coverArtist, String series, LocalDate publishDate,
             double cost, int numberInStock, int sales) {
         
         setPublishDate(publishDate);
@@ -62,7 +62,7 @@ public class Book {
      * Prior to 2007--> xxxxxxxxxx (always a total of 10)
      * After 2007 JAN 1st --> xxxxxxxxxxxxx
      * Always a  total of 13 characters 
-     * book must have an exact publsih date to have an ISBN
+     * book must have an exact publish date to have an ISBN
      * @param isbn
      * @return 
      */
@@ -116,14 +116,6 @@ public class Book {
     private boolean validateAuthor(Author author)
     {
         return !authors.contains(author);
-    }
-    
-    private boolean validateSetSeries(Series series)
-    {
-        if(this.series == null)
-            return true;
-        else
-            return false;
     }
     
     /* END OF VALIDATORS */
@@ -188,27 +180,49 @@ public class Book {
     public String getListOfGenres()
     {
         String output = "";
+        if(genres == null | genres.isEmpty())
+            return "No Genre";
+        else if(genres.size() == 1)
+                {
+                    return genres.get(0);
+                }
         for(int i = 0; i < genres.size() - 1; i++)
-        {
-            output += genres.get(i) + ", ";
-        }
-        output += genres.get(genres.size() - 1);
+            {
+                output += genres.get(i) + ", ";
+            }
+            output += genres.get(genres.size() - 1);
+
+            
         return output;
     }
 
     public ArrayList<Author> getAuthors() {
         return authors;
     }
+    
+    public String getAuthorsList() 
+    {
+        String output = "";
+        if(authors == null | authors.isEmpty())
+            return "No Authors";
+        else if(authors.size() == 1) {
+            return authors.get(0).getLastName();
+        }
+        for(int i = 0; i < authors.size() - 1; i++)
+        {
+            output += authors.get(i).getLastName() + ", ";
+        }
+        output += authors.get(authors.size() - 1).getLastName();
+        
+        return output;
+    }
 
-    public Series getSeries() {
+    public String getSeries() {
         return series;
     }
 
-    public void setSeries(Series series) {
-        if(validateSetSeries(series))
-            this.series = series;
-        else
-            throw new IllegalArgumentException("Invalid Series");
+    public void setSeries(String series) {
+        this.series = series;
     }
     
     public LocalDate getPublishDate()
@@ -219,6 +233,27 @@ public class Book {
     public void setPublishDate(LocalDate publishDate)
     {
         this.publishDate = publishDate;
+    }
+    
+    public void setPublisher(String publisher)
+    {
+        this.publisher = publisher;
+    }
+    
+    public String getPublisher()
+    {
+        return publisher;
+    }
+    
+    public String getGenresList()
+    {
+        String output = "";
+        for(String genreList : this.getGenres())
+        {
+            output += genreList;
+        }
+        
+        return output;
     }
 
     public double getCost() {

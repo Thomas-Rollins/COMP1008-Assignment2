@@ -10,8 +10,6 @@ import java.util.ArrayList;
 public class Author {
 
     private String firstName, lastName, nationality;
-    private ArrayList<Book> currentlyWritting, publishedBooks;
-    private int numberOfBooksPublished; //change to derived local
     private LocalDate dateOfBirth;
 
     public Author(String firstName, String lastName, String nationality, LocalDate dateOfBirth) {
@@ -46,23 +44,8 @@ public class Author {
     }
 
     public void setNationality(String nationality) {
+        nationality = nationality.toUpperCase();
         this.nationality = nationality;
-    }
-
-    public ArrayList<Book> getCurrentlyWritting() {
-        return currentlyWritting;
-    }
-
-    public ArrayList<Book> getPublishedBooks() {
-        return publishedBooks;
-    }
-
-    public int getNumberOfBooksPublished() {
-        return numberOfBooksPublished;
-    }
-
-    public void setNumberOfBooksPublished(int numberOfBooksPublished) {
-        this.numberOfBooksPublished = numberOfBooksPublished;
     }
 
     public LocalDate getDateOfBirth() {
