@@ -20,7 +20,7 @@
                   <Font name="System Bold" size="25.0" />
                </font>
             </Label>
-            <TableView fx:id="tableView" editable="true" prefHeight="177.0" prefWidth="574.0">
+            <TableView fx:id="tableView" editable="true" onMouseClicked="#userClickedOnTable" prefHeight="177.0" prefWidth="574.0">
               <columns>
                   <TableColumn fx:id="shelfColumnsColumn" prefWidth="70.66665649414062" text="Columns" />
                   <TableColumn fx:id="booksPerRowColumn" prefWidth="90.33331298828125" text="Books Per Row" />
@@ -46,8 +46,8 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#deleteButtonPushed" text="Delete Shelf" />
-                  <Button mnemonicParsing="false" onAction="#changeSceneToBookShelfView" text="Go To Shelf" />
+                  <Button fx:id="deleteButton" disable="true" mnemonicParsing="false" onAction="#deleteButtonPushed" text="Delete Shelf" />
+                  <Button fx:id="selectButton" disable="true" mnemonicParsing="false" onAction="#changeSceneToBookShelfView" text="Go To Shelf" />
                   <Button mnemonicParsing="false" onAction="#newShelfButtonPushed" text="Add Shelf" />
                </children>
             </HBox>

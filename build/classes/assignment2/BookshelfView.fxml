@@ -10,34 +10,44 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="406.0" prefWidth="702.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment2.BookshelfViewController">
+<AnchorPane id="AnchorPane" prefHeight="404.0" prefWidth="831.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment2.BookshelfViewController">
    <children>
-      <VBox alignment="CENTER" layoutX="1.0" layoutY="12.0" prefHeight="392.0" prefWidth="702.0">
+      <VBox alignment="CENTER" layoutX="1.0" layoutY="12.0" prefHeight="392.0" prefWidth="821.0">
          <children>
             <Label fx:id="shelfLabel" alignment="CENTER" contentDisplay="CENTER" text="Bookshelf">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView fx:id="tableView" prefHeight="260.0" prefWidth="634.0">
+            <TableView fx:id="tableView" onMouseClicked="#userClickedOnTable" prefHeight="260.0" prefWidth="815.0">
               <columns>
                 <TableColumn fx:id="titleColumn" prefWidth="77.33331298828125" text="Title" />
                 <TableColumn fx:id="authorsColumn" prefWidth="119.66668701171875" text="Authors" />
                   <TableColumn fx:id="genreColumn" prefWidth="93.33331298828125" text="Genre" />
-                  <TableColumn fx:id="seriesColumn" prefWidth="82.33331298828125" text="Series" />
-                  <TableColumn fx:id="publishedColumn" prefWidth="112.0" text="Published" />
-                  <TableColumn fx:id="isbnColumn" prefWidth="77.33331298828125" text="ISBN" />
-                  <TableColumn fx:id="costColumn" prefWidth="48.66668701171875" text="Cost" />
-                  <TableColumn fx:id="salesColumn" prefWidth="70.33331298828125" text="Total Sales" />
+                  <TableColumn fx:id="seriesColumn" prefWidth="90.3333740234375" text="Series" />
+                  <TableColumn fx:id="publishedColumn" prefWidth="104.6666259765625" text="Published" />
+                  <TableColumn fx:id="publisherColumn" prefWidth="87.666748046875" text="Publisher" />
+                  <TableColumn fx:id="isbnColumn" prefWidth="90.333251953125" text="ISBN" />
+                  <TableColumn fx:id="costColumn" prefWidth="53.3333740234375" text="Cost" />
+                  <TableColumn fx:id="salesColumn" prefWidth="82.3333740234375" text="Total Sales" />
               </columns>
             </TableView>
             <HBox alignment="CENTER" prefHeight="67.0" prefWidth="568.0" spacing="30.0">
                <children>
-                  <Button fx:id="returnButton" mnemonicParsing="false" text="Return">
+                  <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnButtonPressed" text="Return">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
+                  <Button fx:id="removeBookButton" disable="true" mnemonicParsing="false" onAction="#removeBookButtonPressed" text="Remove Book">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="editBookButton" disable="true" mnemonicParsing="false" onAction="#editBookButtonPressed" text="Edit Book">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
                   <Button fx:id="addNewBookButton" mnemonicParsing="false" onAction="#addBookButtonPressed" text="Add New Book">
                      <font>
                         <Font size="14.0" />

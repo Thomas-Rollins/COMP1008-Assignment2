@@ -1,14 +1,26 @@
+/**
+ * INTRO TO OOP - WINTER 2017
+ * ASSIGNMENT TWO
+ * BOOK CONTROLER CLASS
+ */
 package assignment2;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML BookViewController class
@@ -35,31 +47,47 @@ public class BookViewController implements Initializable {
     @FXML private DatePicker publishDatePicker;
     
     private Book selectedBook;
+    private BookShelf selectedBookShelf;
+   
     
     @FXML private Button returnButton;
     @FXML private Button editButton;
     @FXML private Button addNewBookButton;
     
-    
-    public void initData(Book book)
+    /**
+     * initialize method
+     * @param book
+     * @param bookShelf 
+     */
+    public void initData(Book book, BookShelf bookShelf)
     {
         selectedBook = book;
+        selectedBookShelf = bookShelf;
         
         titleTextField.setText(selectedBook.getTitle());
         authorTextField.setText(selectedBook.getAuthorsList());
-        genresTextField.setText(selectedBook.getGenresList());
+        genresTextField.setText(selectedBook.getListOfGenres());
         publisherTextField.setText(selectedBook.getPublisher());
-        publishDateDatePicker.setValue(selectedBook.getPublishDate());
+        try{
+            publishDateDatePicker.setValue(selectedBook.getPublishDate());
+        } catch (NullPointerException e){}
+        
+        publisherTextField.setText(selectedBook.getPublisher());
         isbnTextField.setText(selectedBook.getIsbn());
         seriesTextField.setText(selectedBook.getSeries());
         coverArtistTextField.setText(selectedBook.getCoverArtist());
-        costTextField.setText(selectedBook.getCost() + "");
-        numberOfSalesTextField.setText(selectedBook.getSales() + "");
+        costTextField.setText(Double.toString(selectedBook.getCost()));
+        numberOfSalesTextField.setText(Integer.toString(selectedBook.getSales()));
+        numberInStockTextField.setText(Integer.toString(selectedBook.getNumberInStock()));
     }
     
-    public void initData()
+    /**
+     * returned initialize method
+     * @param bookShelf 
+     */
+    public void initData(BookShelf bookShelf)
     {
-        
+        selectedBookShelf = bookShelf;
     }
     
     /**
@@ -72,10 +100,15 @@ public class BookViewController implements Initializable {
         // TODO
     } 
     
-    public void addBookButtonPushed()
+    /**
+     * Adds a new book on button press
+     * @param event
+     * @throws IOException 
+     */
+    public void addBookButtonPushed(ActionEvent event) throws IOException
     {
-        String title, author, genre, publisher, isbn, numberInStock, series,
-                coverArtist, costString, bookType, numberOfSalesString;
+        String title, author, genre, publisher, isbn, numberInStockString, series,
+                coverArtist, costString, numberOfSalesString;
         LocalDate publishDate;
         
         title = titleTextField.getText();
@@ -83,22 +116,51 @@ public class BookViewController implements Initializable {
         genre = genresTextField.getText();
         publisher = publisherTextField.getText();
         isbn = isbnTextField.getText();
-        numberInStock = numberInStockTextField.getText();
+        numberInStockString = numberInStockTextField.getText();
         series = seriesTextField.getText();
         publishDate = publishDatePicker.getValue();
         coverArtist = coverArtistTextField.getText();
         costString = costTextField.getText();
         numberOfSalesString = numberOfSalesTextField.getText();
         
-        Book newBook = new Book(title, isbn, coverArtist, series, publishDate, cost, numberInStock, sales);
+        if(numberInStockString.trim().equals(""))
+            numberInStockString = "0";
+        if(costString.trim().equals(""))
+            costString = "0.00";
+        if(numberOfSalesString.trim().equals(""))
+            numberOfSalesString = "0";
         
-        outputTextArea.setText("Title: " + title + "\tAuthor: " + author + "\tGenre: "
-        + genre + "\nPublisher: " + publisher + "\tISBN: " + isbn + "\tnumberInStock: "
-        + numberInStock + "\nSeries: " + series + "\tPublish Date: " + publishDate.toString()
-        + "\tCover Arist: " + coverArtist + "\nCost: " + costString + "\tNumber of Sales: " + numberOfSalesString);
-       
-    }
+        try {
+        Book newBook = new Book(title, author, isbn, coverArtist, series, publisher, 
+                publishDate, validateCost(costString), validateNumberInStock(numberInStockString),
+                validateSales(numberOfSalesString));
+        newBook.addGenres(genre);
+        selectedBookShelf.addBook(newBook);
+        } catch(IllegalArgumentException e)
+        {
+            System.out.println(e.getMessage());
+            return;
+        }
     
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("BookShelfView.fxml"));
+        Parent tableViewParent = loader.load();
+        
+        Scene tableViewScene = new Scene(tableViewParent);
+        
+        BookshelfViewController controller = loader.getController();
+        controller.initData(selectedBookShelf);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(tableViewScene);
+        window.show();
+}
+    
+    /**
+     * validates type conversion
+     * @param costString
+     * @return 
+     */
     public double validateCost(String costString)
     {
         double cost = 0.00;
@@ -113,6 +175,11 @@ public class BookViewController implements Initializable {
         return cost;
     }
     
+    /**
+     * validates type conversion
+     * @param salesString
+     * @return 
+     */
      public int validateSales(String salesString)
     {
         int sales = 0;
@@ -126,15 +193,93 @@ public class BookViewController implements Initializable {
         
         return sales;
     }
-    
-    public void editBookButtonPushed()
+     
+     /**
+      * validates type conversion
+      * @param numberInStockString
+      * @return 
+      */
+     public int validateNumberInStock(String numberInStockString)
     {
+        int numberInstock = 0;
+        
+        try {
+            numberInstock = Integer.parseInt(numberInStockString);
+        } catch (NumberFormatException e) 
+        {
+            outputTextArea.appendText("\nThe number in stock must be a whole number number equal to or greather than zero.");
+        }
+        
+        return numberInstock;
+    }
+     
+    /**
+     * edits an existing book
+     * @param event
+     * @throws IOException 
+     */
+    public void editBookButtonPushed(ActionEvent event) throws IOException
+    {   
+        String title, author, genre, publisher, isbn, numberInStockString, series,
+                coverArtist, costString, numberOfSalesString;
+        LocalDate publishDate;
+        
+        title = titleTextField.getText();
+        author = authorTextField.getText();
+        genre = genresTextField.getText();
+        publisher = publisherTextField.getText();
+        isbn = isbnTextField.getText();
+        numberInStockString = numberInStockTextField.getText();
+        series = seriesTextField.getText();
+        publishDate = publishDatePicker.getValue();
+        coverArtist = coverArtistTextField.getText();
+        costString = costTextField.getText();
+        numberOfSalesString = numberOfSalesTextField.getText();
+        
+        try {
+        Book newBook = new Book(title, author, isbn, coverArtist, series, publisher, publishDate, validateCost(costString), validateNumberInStock(numberInStockString), validateSales(numberOfSalesString));
+        newBook.addGenres(genre);
+        
+        selectedBookShelf.addBook(newBook);
+        selectedBookShelf.removeBook(selectedBook);
+        } catch(IllegalArgumentException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        
+        //return to bookshelfview
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("BookShelfView.fxml"));
+        Parent tableViewParent = loader.load();
+        
+        Scene tableViewScene = new Scene(tableViewParent);
+        
+        BookshelfViewController controller = loader.getController();
+        controller.initData(selectedBookShelf);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(tableViewScene);
+        window.show();
         
     }
     
-    public void returnButtonPushed()
+    /**
+     * returns to BookShelfView
+     */
+    public void returnButtonPushed(ActionEvent event) throws IOException
     {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("BookShelfView.fxml"));
+        Parent tableViewParent = loader.load();
         
+        Scene tableViewScene = new Scene(tableViewParent);
+        
+        BookshelfViewController controller = loader.getController();
+        controller.initData(selectedBookShelf);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(tableViewScene);
+        window.show();
     }
     
 }

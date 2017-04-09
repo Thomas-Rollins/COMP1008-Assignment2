@@ -1,7 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * INTRO TO OOP - WINTER 2017
+ * ASSIGNMENT TWO
+ * BOOKSHELF CONTROLLER CLASS
  */
 package assignment2;
 
@@ -43,6 +43,7 @@ public class BookshelfViewController implements Initializable {
     @FXML private TableColumn<Book, String> authorsColumn;
     @FXML private TableColumn<Book, String> seriesColumn;
     @FXML private TableColumn<Book, LocalDate> publishedColumn;
+    @FXML private TableColumn<Book, String> publisherColumn;
     @FXML private TableColumn<Book, String> isbnColumn;
     @FXML private TableColumn<Book, Double> costColumn;
     @FXML private TableColumn<Book, Integer> salesColumn;
@@ -50,22 +51,23 @@ public class BookshelfViewController implements Initializable {
     @FXML private Button addNewBookButton;
     @FXML private Button returnButton;
     @FXML private Button editBookButton;
+    @FXML private Button removeBookButton;
     
-    
+    /**
+     * initializes the scene data
+     * @param bookShelf 
+     */
     public void initData(BookShelf bookShelf)
     {
-        Book newBook = new Book("Title", "978-92-95055-02-5", "Cover Artist", "Series1",
-                LocalDate.of(2007, Month.JANUARY, 2), 19.99, 100, 50);
-        newBook.addAuthors(new Author("Valid", "Author", "Canadian", LocalDate.of(1084, Month.MARCH, 12)));
-        
         selectedBookShelf = bookShelf;
-        selectedBookShelf.addBook(0, newBook);
+
         
         titleColumn.setCellValueFactory(new PropertyValueFactory<Book, String> ("title"));
         genreColumn.setCellValueFactory(new PropertyValueFactory<Book, String> ("listOfGenres"));
         authorsColumn.setCellValueFactory(new PropertyValueFactory<Book, String> ("authorsList"));
         seriesColumn.setCellValueFactory(new PropertyValueFactory<Book, String> ("series"));
         publishedColumn.setCellValueFactory(new PropertyValueFactory<Book, LocalDate> ("publishDate"));
+        publisherColumn.setCellValueFactory(new PropertyValueFactory<Book, String> ("publisher"));
         isbnColumn.setCellValueFactory(new PropertyValueFactory<Book, String> ("isbn"));
         costColumn.setCellValueFactory(new PropertyValueFactory<Book, Double> ("cost"));
         salesColumn.setCellValueFactory(new PropertyValueFactory<Book, Integer> ("sales"));
@@ -77,6 +79,11 @@ public class BookshelfViewController implements Initializable {
         tableView.setItems(observableBookList);
     }
     
+    /**
+     * changes the scene to edit a book
+     * @param event
+     * @throws IOException 
+     */
     public void editBookButtonPressed(ActionEvent event) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
@@ -86,7 +93,7 @@ public class BookshelfViewController implements Initializable {
         Scene tableViewScene = new Scene(tableViewParent);
         
         BookViewController controller = loader.getController();
-        controller.initData(tableView.getSelectionModel().getSelectedItem());
+        controller.initData(tableView.getSelectionModel().getSelectedItem(), selectedBookShelf);
         
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         
@@ -94,6 +101,11 @@ public class BookshelfViewController implements Initializable {
         window.show();
     }
     
+    /**
+     * changes the scene to add a new book
+     * @param event
+     * @throws IOException 
+     */
     public void addBookButtonPressed(ActionEvent event) throws IOException
     {
         FXMLLoader loader = new FXMLLoader();
@@ -103,11 +115,60 @@ public class BookshelfViewController implements Initializable {
         Scene tableViewScene = new Scene(tableViewParent);
         
         BookViewController controller = loader.getController();
-        controller.initData();
+        controller.initData(selectedBookShelf);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         
         window.setScene(tableViewScene);
         window.show();
+    }
+    
+    /**
+     * returns to the bookstore scene
+     * @param event
+     * @throws IOException 
+     */
+    public void returnButtonPressed(ActionEvent event) throws IOException
+    {
+        
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("BookStoreView.fxml"));
+        Parent tableViewParent = loader.load();
+        
+        Scene tableViewScene = new Scene(tableViewParent);
+        BookStoreViewController controller = loader.getController();
+        controller.initData(BookStoreViewController.bookStore);
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(tableViewScene);
+        window.show();
+    }
+    
+    /**
+     * deletes a shelf;
+     * @param event
+     * @throws IOException 
+     */
+    public void removeBookButtonPressed(ActionEvent event) throws IOException
+    {
+        ObservableList<Book> selectedBooks, allBooks;
+        allBooks = tableView.getItems();
+        
+        selectedBooks = tableView.getSelectionModel().getSelectedItems();
+        
+        for (Book book : selectedBooks)
+        {
+            allBooks.remove(book);
+            selectedBookShelf.removeBook(book);
+        }
+    }
+    
+    /**
+     * enables buttons when a table element is selected
+     */
+    public void userClickedOnTable()
+    {
+        this.removeBookButton.setDisable(false);
+        this.editBookButton.setDisable(false);
     }
     
     
@@ -118,7 +179,7 @@ public class BookshelfViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    
     }    
     
 }

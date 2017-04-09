@@ -26,7 +26,6 @@ public class BookStoreTest {
     private Book validBook4;
     private Book validBook5;
     
-    private Author validAuthor, validAuthor2, validAuthor3;
     
     private BookShelf validShelf1, validShelf2, validShelf3;
     
@@ -45,27 +44,19 @@ public class BookStoreTest {
     @Before
     public void setUp() {
         
-       validBook = new Book("Title", "978-92-95055-02-5", "Cover Artist", "Series1",
-                LocalDate.of(2007, Month.JANUARY, 2), 19.99, 100, 50);
-       validBook2 = new Book("Title", "978-92-95055-02-5", "Cover Artist", "Series2",
-                LocalDate.of(2007, Month.JANUARY, 1), 19.99, 100, 50);
-       validBook3 = new Book("Title", "978-92-95-02-5", "Cover Artist", "Series1",
-                LocalDate.of(2006, Month.DECEMBER, 31), 19.99, 100, 50);
-       validBook4 = new Book("Title", "978-92-95-02-5", "Cover Artist", "Series3",
-                null, 19.99, 100, 50);
-       validBook5 = new Book("Title", "978-92-95951-02-5", "Cover Artist", null,
-               LocalDate.of(2018, Month.DECEMBER, 31), 19.99, 100, 50);
+       validBook = new Book("Title", "Brent Weeks", "978-92-95055-02-5", "Cover Artist", "Series1",
+                "publisher", LocalDate.of(2007, Month.JANUARY, 2), 19.99, 100, 50);
+       validBook2 = new Book("Title", "Another Author", "978-92-95055-02-5", "Cover Artist", "Series1",
+                "publisher", LocalDate.of(2007, Month.JANUARY, 1), 19.99, 100, 50);
+       validBook3 = new Book("Title", "Author Two", "978-92-95-02-5", "Cover Artist", "Series2",
+                "publisher", LocalDate.of(2006, Month.DECEMBER, 31), 19.99, 100, 50);
+       validBook4 = new Book("Title", "Author Three", "978-92-95-02-5", "Cover Artist", "Series3",
+                "publisher", null, 19.99, 100, 50);
+       validBook5 = new Book("Title", "Author Three", "978-92-95951-02-5", "Cover Artist", null,
+               "publisher", LocalDate.of(2018, Month.DECEMBER, 31), 19.99, 100, 50);
        
        validBook2.addGenres("FANTASY");
        validBook2.addGenres("ADVENTURE");
-       
-       validAuthor = new Author("Thomas", "Rollins", "Canadian", LocalDate.of(1994,
-               Month.NOVEMBER, 24));
-        
-        validAuthor2 = new Author("Tom", "Coulter", "Canadian", LocalDate.of(1992,
-               Month.MARCH, 13));
-        validAuthor3 = new Author("Tom", "Ehsani", "Canadian", LocalDate.of(1992,
-               Month.MARCH, 13));
         
        validShelf1 = new BookShelf(5, 8);
        validShelf2 = new BookShelf(4, 5);
@@ -74,13 +65,11 @@ public class BookStoreTest {
        validStore = new BookStore(4);
        
        validStore2 = new BookStore(3);
-       validBook.addAuthors(validAuthor);
-       validShelf2.addBook(0, validBook);
-       validBook2.addAuthors(validAuthor2);
-       validBook3.addAuthors(validAuthor3);
-       validBook3.addAuthors(validAuthor);
-       validShelf2.addBook(0, validBook2);
-       validShelf2.addBook(1, validBook3);
+
+       validShelf2.addBook(validBook);
+
+       validShelf2.addBook(validBook2);
+       validShelf2.addBook(validBook3);
        validStore2.addShelf(validShelf2);
     }
     
@@ -191,17 +180,4 @@ public class BookStoreTest {
         int result = instance.getTotalBooksInStore();
         assertEquals(expResult, result);
     }
-    
-    @Test
-    public void testGetBooksInStoryByAuthor()
-    {
-        System.out.println("getBooksInStoryByAuthor");
-        BookStore instance = validStore2;
-        ArrayList<Book> expResult = new ArrayList<>();
-        expResult.add(validBook);
-        expResult.add(validBook3);
-        assertEquals(expResult, instance.getBooksInStoreByAuthor(validAuthor));
-    }
-
-
 }

@@ -22,15 +22,12 @@ import static org.junit.Assert.*;
  * @author Thomas Rollins
  */
 public class BookShelfTest {
-    private BookShelf validShelf1, validShelf2;
+    private BookShelf validShelf1, validShelf2, validShelf3;
     private Book validBook;
     private Book validBook2;
     private Book validBook3;
     private Book validBook4;
     private Book validBook5;
-    
-    private Author validAuthor, validAuthor2, validAuthor3;
-    
     
     public BookShelfTest() {
     }
@@ -47,41 +44,28 @@ public class BookShelfTest {
     public void setUp() {
         validShelf1 = new BookShelf(5, 8);
         validShelf2 = new BookShelf(4,5);
+        validShelf3 = new BookShelf(1,3);
         
-        validBook = new Book("Title", "978-92-95055-02-5", "Cover Artist", "Series2",
-                LocalDate.of(2007, Month.JANUARY, 2), 19.99, 100, 50);
-        validBook2 = new Book("Title", "978-92-95055-02-5", "Cover Artist", "Series1",
-                LocalDate.of(2007, Month.JANUARY, 1), 19.99, 100, 50);
-        validBook3 = new Book("Title", "978-92-95-02-5", "Cover Artist", "Series3",
-                LocalDate.of(2006, Month.DECEMBER, 31), 19.99, 100, 50);
-        validBook4 = new Book("Title", "978-92-95-02-5", "Cover Artist", "Series1",
-                null, 19.99, 100, 50);
-        validBook5 = new Book("Title", "978-92-95951-02-5", "Cover Artist", null,
-               LocalDate.of(2018, Month.DECEMBER, 31), 19.99, 100, 50);
-        
-        validShelf1.addBook(0, validBook);
+       validBook = new Book("Title", "Brent Weeks", "978-92-95055-02-5", "Cover Artist", "Series1",
+                "publisher", LocalDate.of(2007, Month.JANUARY, 2), 19.99, 100, 50);
+       validBook2 = new Book("Title", "Another Author", "978-92-95055-02-5", "Cover Artist", "Series1",
+                "publisher", LocalDate.of(2007, Month.JANUARY, 1), 19.99, 100, 50);
+       validBook3 = new Book("Title", "Author Two", "978-92-95-02-5", "Cover Artist", "Series2",
+                "publisher", LocalDate.of(2006, Month.DECEMBER, 31), 19.99, 100, 50);
+       validBook4 = new Book("Title", "Author Three", "978-92-95-02-5", "Cover Artist", "Series3",
+                "publisher", null, 19.99, 100, 50);
+       validBook5 = new Book("Title", "Author Three", "978-92-95951-02-5", "Cover Artist", null,
+               "publisher", LocalDate.of(2018, Month.DECEMBER, 31), 19.99, 100, 50);
+       
+        validShelf1.addBook(validBook);
         validBook.addGenres("fantasy");
-        validShelf1.addBook(0, validBook2);
+        validShelf1.addBook(validBook2);
         validBook2.addGenres("adventure");
-        validShelf1.addBook(1, validBook3);
-        validShelf1.addBook(1, validBook4);
+        validShelf1.addBook(validBook3);
+        validShelf1.addBook(validBook4);
         validBook4.addGenres("Romance");
-        validShelf1.addBook(1, validBook5);
-        
-        validAuthor = new Author("Thomas", "Rollins", "Canadian", LocalDate.of(1994,
-               Month.NOVEMBER, 24));
-        
-        validAuthor2 = new Author("Tom", "Coulter", "Canadian", LocalDate.of(1992,
-               Month.MARCH, 13));
-        validAuthor3 = new Author("Tom", "Ehsani", "Canadian", LocalDate.of(1992,
-               Month.MARCH, 13));
-        
-        validBook.addAuthors(validAuthor);
-        validBook.addAuthors(validAuthor2);
-        validBook2.addAuthors(validAuthor3);
-        validBook3.addAuthors(validAuthor);
-        
-        
+        validShelf1.addBook(validBook5);
+    
     }
     
     @After
@@ -126,27 +110,11 @@ public class BookShelfTest {
     }
 
     @Test
-    public void testGetBooksOnShelfRow() {
-        System.out.println("getBooksOnShelfRow");
-        int index = 0;
+    public void testGetTotalCapacity() {
+        System.out.println("getTotalCapacity");
         BookShelf instance = validShelf1;
-        ArrayList expResult = new ArrayList<>();
-        expResult.add(validBook);
-        expResult.add(validBook2);
-        ArrayList result = instance.getBooksOnShelfRow(index);
-        assertEquals(expResult, result);
-    }
-    
-    @Test
-    public void testGetBooksOnShelfRow2() {
-        System.out.println("getBooksOnShelfRow");
-        int index = 1;
-        BookShelf instance = validShelf1;
-        ArrayList expResult = new ArrayList<>();
-        expResult.add(validBook3);
-        expResult.add(validBook4);
-        expResult.add(validBook5);
-        ArrayList result = instance.getBooksOnShelfRow(index);
+        int expResult = 40;
+        int result = instance.getTotalCapacity();
         assertEquals(expResult, result);
     }
 
@@ -172,88 +140,93 @@ public class BookShelfTest {
         int result = instance.getNumberOfBooksOnShelf();
         assertEquals(expResult, result);
     }
-
-    @Test
-    public void testGetAuthorsOnShelf() {
-        System.out.println("getAuthorsOnShelf");
-        int index = 0;
-        BookShelf instance = validShelf1;
-        ArrayList<Author> expResult = new ArrayList<>();
-        expResult.add(validAuthor3);
-        expResult.add(validAuthor);
-        expResult.add(validAuthor2);
-        Collections.sort(expResult, Comparator.comparing(Author::getLastName));
-        ArrayList<Author> result = instance.getAuthorsOnShelf(index);
-        assertEquals(expResult, result);
-    }
-    
-    @Test
-    public void testGetListOfAuthorsOnShelf2() {
-        System.out.println("getListOfAuthorsOnShelf2");
-        int index = 1;
-        BookShelf instance = validShelf2;
-        String expResult = "";
-        String result = instance.getListOfAuthorsOnShelf(index);
-        assertEquals(expResult, result);
-    }
-    
-    @Test
-    public void testGetAuthorsOnShelf2() {
-        System.out.println("getAuthorsOnShelf2");
-        int index = 1;
-        BookShelf instance = validShelf1;
-        ArrayList<Author> expResult = new ArrayList<>();
-        expResult.add(validAuthor);
-        ArrayList<Author> result = instance.getAuthorsOnShelf(index);
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    public void testGetListOfAuthorsOnShelf() {
-        System.out.println("getListOfAuthorsOnShelf");
-        int index = 0;
-        BookShelf instance = validShelf1;
-        String expResult = "Tom Coulter, Tom Ehsani, Thomas Rollins";
-        String result = instance.getListOfAuthorsOnShelf(index);
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    public void testGetGenresOnShelf() {
-        System.out.println("getGenresOnShelf");
-        int index = 0;
-        BookShelf instance = validShelf1;
-        ArrayList<String> expResult = new ArrayList<>();
-        expResult.add("FANTASY");
-        expResult.add("ADVENTURE");
-        ArrayList<String> result = instance.getGenresOnShelf(index);
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    public void testGetListOfGenresOnShelf() {
-        System.out.println("getListOfGenresOnShelf");
-        int index = 0;
-        BookShelf instance = validShelf1;
-        String expResult = "FANTASY, ADVENTURE";
-        String result = instance.getListOfGenresOnShelf(index);
-        assertEquals(expResult, result);
-    }
-    
+ 
     @Test
     public void testAddBook() {
         System.out.println("testAddBook");
-        int row = 0;
-        BookShelf instance = validShelf1;
-        instance.addBook(row, validBook);
-        instance.addBook(row, validBook);
-        instance.addBook(row, validBook);
+        BookShelf instance = validShelf3;
+        instance.addBook(validBook);
+        instance.addBook(validBook);
+        instance.addBook(validBook);
         
         try {
-            instance.addBook(row, validBook);
+            instance.addBook(validBook);
             fail("Should have thrown an Exception");
         }
         catch(IllegalArgumentException e){}
+    }
+    
+    @Test
+    public void testRemoveBook() {
+        System.out.println("removeBook");
+        BookShelf instance = validShelf1;
+        ArrayList<Book> expResult = new ArrayList<>();
+        
+        expResult.add(validBook2);
+        expResult.add(validBook3);
+        expResult.add(validBook4);
+        expResult.add(validBook5);
+        
+        instance.removeBook(validBook);
+        assertEquals(expResult, instance.getAllBooksOnShelf());
+    }
+    
+    @Test
+    public void testGetAuthorListRangeOnShelf()
+    {
+        System.out.println("getAuthorListRangeOnShelf");
+        BookShelf instance = validShelf1;
+        String expResult ="Author - Weeks";
+        assertEquals(expResult, instance.getAuthorListRangeOnShelf());
+    }
+    
+    @Test
+    public void testGetAuthorListRangeOnShelf2()
+    {
+        System.out.println("getAuthorListRangeOnShelf2");
+        BookShelf instance = validShelf2;
+        String expResult ="No Authors Listed";
+        assertEquals(expResult, instance.getAuthorListRangeOnShelf());
+    }
+    
+    @Test
+    public void testGetAuthorListRangeOnShelf3()
+    {
+        System.out.println("getAuthorListRangeOnShelf2");
+        BookShelf instance = validShelf2;
+        instance.addBook(validBook);
+        String expResult = "Weeks";
+        assertEquals(expResult, instance.getAuthorListRangeOnShelf());
+    }
+    
+    @Test
+    public void testGetGenresOnShelf()
+    {
+        System.out.println("getGenresOnShelf");
+        BookShelf instance = validShelf1;
+        ArrayList<String> expResult = new ArrayList<>();
+        expResult.add("ADVENTURE");
+        expResult.add("FANTASY");
+        expResult.add("ROMANCE");
+        assertEquals(expResult, instance.getGenresOnShelf());
+    }
+    
+    @Test
+    public void testGetShelfGenre()
+    {
+        System.out.println("getShelfGenre");
+        BookShelf instance = validShelf1;
+        String expResult = "ADVENTURE";
+        assertEquals(expResult, instance.getShelfGenre());
+    }
+    
+    @Test
+    public void testGetShelfGenre2()
+    {
+        System.out.println("getShelfGenre2");
+        BookShelf instance = validShelf2;
+        String expResult = "No Genre Listed";
+        assertEquals(expResult, instance.getShelfGenre());
     }
     
 }
